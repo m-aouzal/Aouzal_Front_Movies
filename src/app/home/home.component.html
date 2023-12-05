@@ -1,0 +1,21 @@
+<body>
+<!--(click)="filterResults(filter.value)"-->
+<div class="container mt-3">
+  <div class="col-md-5 mb-3">
+    <form class="d-flex" (ngSubmit)="filterResults(filter.value)">
+      <input class="form-control me-2" style="border: 1.3px solid lightslategray;" type="search" placeholder="Search movie" aria-label="Search" #filter>
+      <button class="btn btn-outline-light" type="submit" style="background-color: #007bff;">Search</button>
+    </form>
+
+  </div>
+  <div class="row">
+    <!-- Use *ngFor to iterate over films -->
+    <app-home-film class="col-md-4" *ngFor="let film of filmsfiltred" [film]="film" >
+
+    </app-home-film>
+
+  </div>
+</div>
+</body>
+
+

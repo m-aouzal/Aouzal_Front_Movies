@@ -1,0 +1,14 @@
+body {
+  padding: 20px;
+}
+
+/* Custom styles for the card */
+.card {
+  width: 18rem; /* Adjust the width as needed */
+  height: auto; /* Adjust the height as needed */
+}
+
+.card-img-top {
+  height: 300px; /* Adjust the image height as needed */
+  object-fit: cover;
+}

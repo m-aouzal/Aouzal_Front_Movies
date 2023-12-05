@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-4">
+    <img src="https://image.tmdb.org/t/p/w500/{{ filmdetails.poster_path }}" alt="{{ filmdetails.title }}" class="img-fluid" />
+  </div>
+  <div class="col-md-8">
+    <h2>{{ filmdetails.title }}</h2>
+    <p><strong>Release Date:</strong> {{ filmdetails.release_date }}</p>
+    <p><strong>Overview:</strong> {{ filmdetails.overview }}</p>
+    <p><strong>Genres:</strong> {{ filmdetails.genres }}</p>
+    <p><strong>Runtime:</strong> {{ filmdetails.runtime }} minutes</p>
+    <p><strong>Popularity:</strong> {{ filmdetails.popularity }}</p>
+    <p><strong>Vote Average:</strong> {{ filmdetails.vote_average }}</p>
+    <p><strong>Production Companies:</strong></p>
+    <ul>
+      <li *ngFor="let company of filmdetails.production_companies">
+        <img src="https://image.tmdb.org/t/p/w200/{{ company.logo_path }}" alt="{{ company.name }}" class="img-fluid" />
+      </li>
+    </ul>
+  </div>
+</div>
