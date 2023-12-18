@@ -7,6 +7,8 @@ import { CommonModule } from "@angular/common";
 import { Editor, NgxEditorModule, Validators } from 'ngx-editor';
 import {FormControl, FormGroup, FormsModule} from "@angular/forms";
 import {Commentaire} from "../../Model/Commentaire";
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-details',
@@ -16,7 +18,7 @@ import {Commentaire} from "../../Model/Commentaire";
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent implements OnInit, OnDestroy {
-  constructor(private filmservice: FilmService, private activatedRoute: ActivatedRoute) {
+  constructor(private filmservice: FilmService, private activatedRoute: ActivatedRoute,private sanitizer: DomSanitizer) {
   }
 
   formData: { nom: string, comment: string } = { nom: '', comment: '' };
@@ -32,6 +34,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
       (response) => {
         // Handle success if needed
         console.log('Comment added successfully', response);
+        // Refresh comment data after adding a new comment
+        this.getCommentaireFiltred(this.filmId);
       },
       (error) => {
         // Handle error if needed
@@ -80,6 +84,20 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.commentaireFiltred=result
     })
   }
+  deleteComment(id: number) {
+    this.filmservice.deleteComment(id).subscribe(
+      (response) => {
+        // Handle success if needed
+        console.log('Comment deleted successfully', response);
+        // Refresh comment data after adding a new comment
+        this.getCommentaireFiltred(this.filmId);
+      },
+      (error) => {
+        // Handle error if needed
+        console.error('Error adding comment', error);
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.getPopularMoviesById();
@@ -100,4 +118,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.editor.destroy();
   }
+
+
+  protected readonly Editor = Editor;
+  sanitizeHTML(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
 }

@@ -51,16 +51,19 @@
         </div>
         <div class="mb-3">
           <label for="comment" class="form-label">Leave a Comment:</label>
-          <textarea class="form-control" id="comment" rows="3" [(ngModel)]="formData.comment" name="comment" required></textarea>
+          <div class="NgxEditor__Wrapper">
+            <ngx-editor-menu  [editor]="editor"> </ngx-editor-menu>
+            <ngx-editor style="height: 200px" [editor]="editor" [ngModel]="html" [disabled]="false" id="comment" [(ngModel)]="formData.comment"  name="comment" [placeholder]="'Type here...'"></ngx-editor>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit Comment</button>
       </form>
 
 
 
-      <div class="container mt-4 mb-4"> <!-- Added margin-bottom -->
+      <div class="container mt-4 mb-4">
         <div class="row">
-          <div class="col-md-10 offset-md-1"> <!-- Increased width and centered -->
+          <div class="col-md-10 offset-md-1">
             <h3 class="mb-3">Comments</h3>
             <ul class="list-group">
               <li class="list-group-item" *ngFor="let comment of commentaireFiltred">
@@ -69,9 +72,11 @@
                     <p class="card-text">
                       <strong>Name:</strong> {{ comment.name }}
                     </p>
-                    <p class="card-text">
-                      <strong>Comment:</strong> {{ comment.commentaire }}
-                    </p>
+                    <div class="card-text" [innerHTML]="sanitizeHTML(comment.commentaire)"></div>
+                    <!-- Add a button to delete the message -->
+                    <button type="button" class="btn btn-danger" (click)="deleteComment(comment.id)">
+                      Delete
+                    </button>
                   </div>
                 </div>
               </li>
@@ -79,6 +84,7 @@
           </div>
         </div>
       </div>
+
 
 
 

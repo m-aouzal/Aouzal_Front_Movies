@@ -22,6 +22,15 @@ import {FormsModule} from "@angular/forms";
 export class HomeComponent implements OnInit{
   films!:Film[]
   filmsfiltred!:Film[]
+
+  genres: string[] = [
+    'Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family',
+    'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction',
+    'Thriller', 'TV Movie', 'War', 'Western'
+  ];
+
+  selectedGenre: string = ''; // Initialize with an empty string or a default genre if needed
+
   constructor(private filmservice:FilmService) {
   }
   ngOnInit(): void {
@@ -44,6 +53,18 @@ export class HomeComponent implements OnInit{
     this.filmsfiltred=this.films.filter(
       film =>film?.title.toLowerCase().includes(text.toLowerCase())
     )
+  }
+
+  filterResultsGenre(genre:string) {
+    /*
+    if(!genre){
+      this.filmsfiltred=this.films
+      console.log(this.films)
+      return;
+    }
+    this.filmsfiltred=this.films.filter(
+      film =>film?.title.toLowerCase().includes(genre.toLowerCase())
+    )*/
   }
 }
 

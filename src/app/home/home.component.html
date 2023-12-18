@@ -1,13 +1,26 @@
 <body>
 <!--(click)="filterResults(filter.value)"-->
 <div class="container mt-3">
-  <div class="col-md-5 mb-3">
-    <form class="d-flex" (ngSubmit)="filterResults(filter.value)">
-      <input class="form-control me-2" style="border: 1.3px solid lightslategray;" type="search" placeholder="Search movie" aria-label="Search" #filter>
-      <button class="btn btn-outline-light" type="submit" style="background-color: #007bff;">Search</button>
-    </form>
+  <div class="d-flex">
+      <div class="col-md-5 mb-3" style="margin-right: 115px">
+        <form class="d-flex" (ngSubmit)="filterResults(filter.value)">
+          <input class="form-control me-2" style="height: 38px; line-height: 1.5;border: 1.3px solid lightslategray;" type="search" placeholder="Search movie" aria-label="Search" #filter (change)="filterResults(filter.value)">
+          <button class="btn btn-outline-light" type="submit" style="background-color: #007bff;">Search</button>
+        </form>
 
+      </div>
+      <div class="col-md-5 mb-3">
+        <form class="d-flex" (ngSubmit)="filterResultsGenre(genre.value)">
+          <select style="height: 38px; line-height: 1.5;border:1.3px solid lightslategray;" class="form-select me-2" id="genre" [(ngModel)]="selectedGenre" name="genre" #genre>
+            <option value="" disabled selected>Select Genre</option>
+            <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+          </select>
+
+          <button type="submit" class="btn btn-outline-light " style="background-color: #007bff;">Search</button>
+        </form>
+      </div>
   </div>
+
   <div class="row">
     <!-- Use *ngFor to iterate over films -->
     <app-home-film class="col-md-4" *ngFor="let film of filmsfiltred" [film]="film" >

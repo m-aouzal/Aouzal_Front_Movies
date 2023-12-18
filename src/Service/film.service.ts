@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';;
+import { Injectable } from '@angular/core';
 import { Film } from "../Model/film";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
@@ -9,7 +9,7 @@ import {map, Observable} from "rxjs";
 export class FilmService {
   constructor(private http: HttpClient) { }
 
-  baseurl = "https://api.themoviedb.org/3/movie/popular";
+  baseurl = "https://api.themoviedb.org/3/discover/movie";
   apikey = "4722616a8836f0b929a9cb3a04f6a6a4";
 
   secondBaseUrl="http://localhost:9999/Commentaire"
@@ -22,6 +22,9 @@ export class FilmService {
   }
   addComment(commentData: any): Observable<any> {
     return this.http.post<any>(`${this.secondBaseUrl}/add`, commentData);
+  }
+  deleteComment(id:number): Observable<any> {
+    return this.http.delete<any>(`${this.secondBaseUrl}/delete/${id}`);
   }
 
 
