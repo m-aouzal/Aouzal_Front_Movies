@@ -6,6 +6,7 @@ import {HomeFilmComponent} from "../home-film/home-film.component";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -27,9 +28,9 @@ export class HomeComponent implements OnInit{
     this.getPopularMovies();
   }
   getPopularMovies(){
-    this.filmservice.getPopularMovies().subscribe((result)=>{
-      this.films=result.results ;
-      this.filmsfiltred=result.results
+    this.filmservice.getPopularMovies().subscribe((data)=>{
+      this.films=data.results ;
+      this.filmsfiltred=data.results
     })
   }
   getUrl(name : any){

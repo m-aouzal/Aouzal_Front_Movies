@@ -12,6 +12,19 @@ export class FilmService {
   baseurl = "https://api.themoviedb.org/3/movie/popular";
   apikey = "4722616a8836f0b929a9cb3a04f6a6a4";
 
+  secondBaseUrl="http://localhost:9999/Commentaire"
+
+  getCommentaire():Observable<any>{
+    return this.http.get<any>(`${this.secondBaseUrl}/commentaires`)
+  }
+  getCommentaireFiltred(idFilm:number):Observable<any>{
+    return this.http.get<any>(`${this.secondBaseUrl}/find/${idFilm}`)
+  }
+  addComment(commentData: any): Observable<any> {
+    return this.http.post<any>(`${this.secondBaseUrl}/add`, commentData);
+  }
+
+
   getPopularMovies(): Observable<any> {
     return this.http.get<any>(`${this.baseurl}?api_key=${this.apikey}`);
   }
