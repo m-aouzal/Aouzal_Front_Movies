@@ -19,7 +19,7 @@
     }
   </style>
 </head>
-<body>
+<body >
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-black">
   <div class="container-fluid">
@@ -32,7 +32,7 @@
         <a class="nav-link fs-5" [routerLink]="['/']">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link fs-5" href="#">Favorited</a>
+        <a class="nav-link fs-5" href="#" [routerLink]="['/favorited']">Favorited</a>
       </li>
     </ul>
 
@@ -41,7 +41,7 @@
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<router-outlet ></router-outlet>
 
 <!-- Your content goes here -->
 

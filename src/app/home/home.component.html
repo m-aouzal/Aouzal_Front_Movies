@@ -1,4 +1,4 @@
-<body>
+<body >
 <!--(click)="filterResults(filter.value)"-->
 <div class="container mt-3">
   <div class="d-flex">
@@ -15,7 +15,6 @@
             <option value="" disabled selected>Select Genre</option>
             <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
           </select>
-
           <button type="submit" class="btn btn-outline-light " style="background-color: #007bff;">Search</button>
         </form>
       </div>

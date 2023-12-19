@@ -66,7 +66,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     console.log('Editor content submitted:',);
   }
 
-  getPopularMoviesById() {
+  getPopularMoviesById() {//get details
     this.filmservice.getPopularMoviesById(this.activatedRoute.snapshot.params["id"]).
     subscribe((result) => {
       this.filmdetails = result;
@@ -118,7 +118,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.editor.destroy();
   }
-
 
   protected readonly Editor = Editor;
   sanitizeHTML(html: string): SafeHtml {

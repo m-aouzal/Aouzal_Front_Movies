@@ -27,7 +27,6 @@ export class FilmService {
     return this.http.delete<any>(`${this.secondBaseUrl}/delete/${id}`);
   }
 
-
   getPopularMovies(): Observable<any> {
     return this.http.get<any>(`${this.baseurl}?api_key=${this.apikey}`);
   }
