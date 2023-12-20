@@ -29,7 +29,33 @@ export class HomeFilmComponent {
 
   toggleFavorite() {
     this.isFavorite = !this.isFavorite;
-    console.log(this.isFavorite,this.film.id)
+    let favoritedata={
+      idfilm:this.film.id,
+      favorited:this.isFavorite
+    }
+    if (this.isFavorite==true){
+      console.log("true")
+      this.filmService.addFavorite(favoritedata).subscribe(
+        (response) => {
+          console.log('Comment added successfully', response);
+          console.log("data is",this.isFavorite,this.film.id)
+        },
+        (error) => {
+          console.error('Error adding favorites', error);
+        })
+    }
+    else{
+      console.log("false")
+      this.filmService.deleteFavoriteByIdFilm(this.film.id).subscribe(
+        (response) => {
+          console.log('Comment deleted', response);
+          console.log("data is",this.isFavorite,this.film.id)
+        },
+        (error) => {
+          console.error('Error delleting', error);
+        })
+    }
+
   }
 
 

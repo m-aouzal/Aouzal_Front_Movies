@@ -1,0 +1,55 @@
+body {
+  padding: 20px;
+}
+
+/* Custom styles for the card */
+.card {
+  width: 18rem; /* Adjust the width as needed */
+  height: auto; /* Adjust the height as needed */
+}
+
+
+.card-img-top {
+  height: 300px; /* Adjust the image height as needed */
+  object-fit: cover;
+}
+/* your-component.component.css */
+
+.card {
+  border: none; /* Remove card border for a cleaner look */
+  transition: transform 0.3s ease; /* Add a smooth transition effect */
+
+  /* Customize card shadow if needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: scale(1.02); /* Zoom in a bit on hover */
+}
+
+.card-img-top {
+  max-height: 300px; /* Set a maximum height for the image */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+.card-body {
+  padding: 1.25rem; /* Add some padding to the card body */
+}
+
+.card-title {
+  font-size: 1.25rem; /* Increase title font size */
+  margin-bottom: 0.5rem; /* Add some space below the title */
+}
+
+.card-text {
+  color: #6c757d; /* Use a slightly muted color for additional text */
+  font-size: 0.9rem; /* Adjust text size */
+}
+
+.favorite-button {
+  color: red; /* Make the favorite button red */
+}
+
+.favorite-icon {
+  font-size: 1.5rem; /* Adjust icon size */
+}

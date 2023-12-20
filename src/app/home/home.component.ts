@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit{
 
         forkJoin(requests).subscribe((results) => {
           results.forEach((result, index) => {
-            this.id_gender.push({ "idfilm": this.all_ids[index], "genre": result.genres });
+            this.id_gender.push({ "idfilm": this.all_ids[index], "genres": result.genres });
           });
         });
       }
@@ -88,16 +88,16 @@ export class HomeComponent implements OnInit{
       this.filmsfiltred = this.films;  // If no genre is selected, display all films
       return;
     }
-    /*
+
     const matchingIds = this.id_gender
-      .filter(entry => entry.genre.some(genreObj => genreObj.name.toLowerCase() === genre.toLowerCase()))
-      .map(entry => entry.idfilm);
+      .filter((entry: any) => entry.genres.some((genreObj: any) => genreObj.name.toLowerCase() === genre.toLowerCase()))
+      .map((entry: { idfilm: number }) => entry.idfilm);
 
     console.log("matchingid", matchingIds);
 
-    /*
+
     this.filmsfiltred = this.films
-      .filter((film) => matchingIds.includes(film.id));*/
+      .filter((film) => matchingIds.includes(film.id));
 
     console.log("Filtered films:", this.filmsfiltred);
 
