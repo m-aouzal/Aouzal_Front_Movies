@@ -1,0 +1,152 @@
+<body>
+  <!-- <div class="alert alert-danger" *ngIf="error">
+    <p>{{ error }}</p>
+  </div> -->
+  <app-alert
+    [message]="error"
+    *ngIf="error"
+    (close)="onHandleError()"
+  ></app-alert>
+
+  <div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true" />
+    <div class="signup">
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmitSignUp()">
+        <label for="chk" aria-hidden="true">Sign up</label>
+        <!-- <input type="text" name="txt" placeholder="User name" required=""> -->
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          class="form-control"
+        />
+        <div
+          class="error-message"
+          *ngIf="
+            signUpForm.get('email').hasError('required') &&
+            signUpForm.get('email').touched
+          "
+        >
+          Email is required.
+        </div>
+        <div
+          class="error-message"
+          *ngIf="
+            signUpForm.get('email').hasError('email') &&
+            signUpForm.get('email').touched
+          "
+        >
+          Invalid email format.
+        </div>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          class="form-control"
+        />
+        <div
+          class="error-message"
+          style="color: aliceblue !important"
+          *ngIf="
+            signUpForm.get('password').hasError('required') &&
+            signUpForm.get('password').touched
+          "
+        >
+          Password is required.
+        </div>
+        <div
+          class="error-message"
+          style="color: aliceblue !important"
+          *ngIf="
+            signUpForm.get('password').hasError('minlength') &&
+            signUpForm.get('password').touched
+          "
+        >
+          Password must be at least 6 characters long.
+        </div>
+
+        <div class="col-12 d-flex justify-content-center" *ngIf="loadingSignUp">
+          <div class="snippet" data-title="dot-rolling">
+            <div class="stage">
+              <div class="dot-rolling"></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div *ngIf="errorSignUp" class="col-xs-8 col-xs-offset-2 p-3 m-3">
+            <div class="alert alert-danger text-center">
+              {{errorSignUp}}
+            </div>
+          </div> -->
+        <div *ngIf="!loadingSignUp">
+          <button class="btn" type="submit" [disabled]="signUpForm.invalid">
+            Sign up
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="login">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+        <label for="chk" aria-hidden="true">Login</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          class="form-control"
+        />
+        <div
+          class="error-message"
+          *ngIf="
+            loginForm.get('email').hasError('required') &&
+            loginForm.get('email').touched
+          "
+        >
+          Email is required.
+        </div>
+        <div
+          class="error-message"
+          *ngIf="
+            loginForm.get('email').hasError('email') &&
+            loginForm.get('email').touched
+          "
+        >
+          Invalid email format.
+        </div>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          class="form-control"
+        />
+        <div
+          class="error-message"
+          *ngIf="
+            loginForm.get('password').hasError('required') &&
+            loginForm.get('password').touched
+          "
+        >
+          Password is required.
+        </div>
+        <div class="col-12 d-flex justify-content-center" *ngIf="loadingLogin">
+          <div class="snippet" data-title="dot-rolling">
+            <div class="stage">
+              <div class="dot-rolling"></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div *ngIf="errorLogin" class="col-xs-8 col-xs-offset-2 p-3 m-3">
+            <div class="alert alert-danger text-center">
+              {{errorLogin}}
+            </div>
+          </div> -->
+        <div *ngIf="!loadingLogin">
+          <button type="submit" [disabled]="loginForm.invalid">Login</button>
+        </div>
+      </form>
+
+      <div class="alert alert-danger" *ngIf="authFailed">
+        Authentication failed
+      </div>
+    </div>
+  </div>
+</body>
