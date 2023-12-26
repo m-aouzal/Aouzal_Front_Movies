@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
       // Now that all_ids is defined, you can make the specific API call
       if (this.all_ids.length > 0) {
         const requests = this.all_ids.map((id) =>
-          this.filmservice.getPopularMoviesById(id)
+          this.filmservice.getMovieById(id)
         );
 
         forkJoin(requests).subscribe((results) => {
@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
   }
 
   getUrl(name: any) {
-    return this.filmservice.getimagefromapi(name);
+    return this.filmservice.getImageFromApi(name);
   }
   filterResults(text: string) {
     if (!text) {
