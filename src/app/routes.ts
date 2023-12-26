@@ -5,6 +5,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { FavoritedComponent } from './favorited/favorited.component';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
+import { blockLoginGuard } from './guards/block-login.guard';
+import { AuthGuard } from './guards/auth-can-activate.guard';
+
 const routeConfig: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -12,6 +15,7 @@ const routeConfig: Routes = [
     path: 'favorited',
     component: FavoritedComponent,
     title: 'favorited page',
+    canActivate: [AuthGuard],
   },
   {
     path: 'details/:id',
@@ -28,7 +32,7 @@ const routeConfig: Routes = [
     path: 'login',
     component: LoginComponent,
     title: 'Login page',
-  
+    canActivate: [blockLoginGuard],
   },
   {
     path: '**',

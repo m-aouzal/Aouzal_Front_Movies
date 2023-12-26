@@ -7,14 +7,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './home/home.component';
-import { FilmService } from './Service/film.service';
 import { RouterModule } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { UsersloginService } from './login/users.login.service';
+import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DialogLoginComponent } from './shared/dialog-login/dialog-login.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -30,6 +33,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     HomeComponent,
     FlexLayoutModule,
     RouterModule,
+    RouterLink,
+    RouterLinkActive,
+    MatDialogModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -37,8 +43,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 export class AppComponent implements OnInit, OnDestroy {
   pageNotFound: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
-
-  constructor(private router: Router) {}
+  isAuthenticated = false;
+  userSub: Subscription;
+  constructor(
+    private router: Router,
+    private userLoginService: UsersloginService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.router.events
@@ -49,16 +60,39 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((event: NavigationEnd) => {
         this.pageNotFound = event.urlAfterRedirects.includes('404');
       });
+    this.userSub = this.userLoginService.userSubject.subscribe((user) => {
+      this.isAuthenticated = !!user;
+    });
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    this.userSub.unsubscribe();
   }
   navigateToAboutPage() {
     this.router.navigate(['/About']);
   }
   navigateToHomePage() {
     this.router.navigate(['/home']);
+  }
+  onLogout() {
+    this.userLoginService.logout();
+  }
+  onLogin() {
+    this.router.navigate(['/login']);
+  }
+  onOpenFavorites() {
+    if (this.isAuthenticated) {
+      this.router.navigate(['/favorites']);
+    } else {
+      {
+        const dialogRef = this.dialog.open(DialogLoginComponent);
+
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log(`Dialog result: ${result}`);
+        });
+      }
+    }
   }
 }
