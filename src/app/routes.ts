@@ -1,30 +1,29 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import {DetailsComponent} from "./details/details.component";
-import {NotFoundComponent} from "./not-found/not-found.component";
-import {FavoritedComponent} from "./favorited/favorited.component"
+import { DetailsComponent } from './details/details.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { FavoritedComponent } from './favorited/favorited.component';
 const routeConfig: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'Home page'
+    title: 'Home page',
   },
   {
     path: 'favorited',
     component: FavoritedComponent,
-    title: 'favorited page'
+    title: 'favorited page',
   },
   {
     path: 'details/:id',
     component: DetailsComponent,
-    title: 'Home details'
-  }
-  ,{
+    title: 'Home details',
+  },
+  {
     path: '**',
-    component: NotFoundComponent,
-    title: 'Home notfound'
-  }
-
+    component: PageNotFoundComponent,
+    title: '404',
+  },
 ];
 
 export default routeConfig;

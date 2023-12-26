@@ -1,0 +1,83 @@
+body {
+  overflow-x: hidden !important;
+}
+
+.headToolBar {
+  background-color: white;
+  font-size: 30px !important;
+  padding: 2px;
+}
+.container {
+  background-color: white !important;
+}
+
+.brand-button {
+  font-size: 28px;
+}
+
+#seller {
+  padding: 0;
+  border: 2px solid #0652dd;
+  border-radius: 10px;
+  color: #0652dd;
+}
+
+#menuTitle {
+  font-size: medium;
+  margin-right: 20px;
+}
+
+.mat-sidenav {
+  background-color: #3f51b5;
+  width: 160px;
+}
+
+.side-nav-items {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.side-menu-item {
+  color: white !important;
+  margin-top: 30px;
+}
+
+.top-menu-item {
+  font-size: 22px;
+  padding: 10px;
+}
+
+@media (min-width: 900px) {
+  #menuIcon {
+    display: none;
+  }
+
+  .mat-sidenav {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .top-menu-item {
+    display: none;
+  }
+}
+
+.container-all {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Hide overflow content */
+  height: 100vh; /* Set the height of the container to viewport height */
+}
+
+container-hidden {
+  display: none !important;
+}
+
+.container-all {
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Hide overflow content */
+  height: 100vh; /* Set the height of the container to viewport height */
+}
