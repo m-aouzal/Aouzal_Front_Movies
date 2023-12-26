@@ -22,7 +22,6 @@ export interface AuthResponseData {
 })
 export class UsersloginService {
   constructor(private http: HttpClient, private router: Router) {}
-
   userSubject = new BehaviorSubject<User>(null);
   private tokenExpirationTime: any;
   signUp(email: string, password: string) {
