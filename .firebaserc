@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "emiflex-60e21": {
+      "hosting": {
+        "movie-app": [
+          "emiflex-60e21"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "emiflex-60e21"
+  }
+}

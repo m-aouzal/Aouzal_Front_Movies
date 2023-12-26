@@ -50,7 +50,13 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -91,6 +97,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "movie-app:build:production",
+              "serveTarget": "movie-app:serve:production"
+            },
+            "development": {
+              "buildTarget": "movie-app:build:development",
+              "serveTarget": "movie-app:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

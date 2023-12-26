@@ -4,6 +4,7 @@ import { DetailsComponent } from './details/details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FavoritedComponent } from './favorited/favorited.component';
 import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './login/login.component';
 const routeConfig: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -23,6 +24,12 @@ const routeConfig: Routes = [
     title: 'About page',
   },
   { path: '404', component: PageNotFoundComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login page',
+  
+  },
   {
     path: '**',
     component: PageNotFoundComponent,
