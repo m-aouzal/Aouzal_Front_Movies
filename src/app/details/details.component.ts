@@ -1,35 +1,37 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { FilmService } from "../../Service/film.service";
-import { Filmdetails } from "../../Model/filmdetails";
-import { Genre } from "../../Model/genre";
-import { CommonModule } from "@angular/common";
+import { ActivatedRoute } from '@angular/router';
+import { FilmService } from '../Service/film.service';
+import { Filmdetails } from '../Model/filmdetails';
+import { Genre } from '../Model/genre';
+import { CommonModule } from '@angular/common';
 import { Editor, NgxEditorModule, Validators } from 'ngx-editor';
-import {FormControl, FormGroup, FormsModule} from "@angular/forms";
-import {Commentaire} from "../../Model/Commentaire";
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { Commentaire } from '../Model/Commentaire';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
 
 @Component({
   selector: 'app-details',
   standalone: true,
   imports: [CommonModule, NgxEditorModule, FormsModule],
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.css']
+  styleUrls: ['./details.component.css'],
 })
 export class DetailsComponent implements OnInit, OnDestroy {
-  constructor(private filmservice: FilmService, private activatedRoute: ActivatedRoute,private sanitizer: DomSanitizer) {
-  }
+  constructor(
+    private filmservice: FilmService,
+    private activatedRoute: ActivatedRoute,
+    private sanitizer: DomSanitizer
+  ) {}
 
-  formData: { nom: string, comment: string } = { nom: '', comment: '' };
+  formData: { nom: string; comment: string } = { nom: '', comment: '' };
 
-  submit_commentaire(){
+  submit_commentaire() {
     const commentData = {
       idfilm: this.filmId,
       name: this.formData.nom,
-      commentaire: this.formData.comment
+      commentaire: this.formData.comment,
     };
-    console.log(commentData)
+    console.log(commentData);
     this.filmservice.addComment(commentData).subscribe(
       (response) => {
         // Handle success if needed
@@ -44,13 +46,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-
   filmdetails!: Filmdetails;
-  commentaire!:Commentaire;
-  commentaireFiltred!:Commentaire[];
-  filmId!:number;
+  commentaire!: Commentaire;
+  commentaireFiltred!: Commentaire[];
+  filmId!: number;
   genre!: Genre[];
-
 
   //text editor
   editor!: Editor;
@@ -63,26 +63,28 @@ export class DetailsComponent implements OnInit, OnDestroy {
     const editorContent = this.html;
 
     // Do something with the content, e.g., send it to the server or log it
-    console.log('Editor content submitted:',);
+    console.log('Editor content submitted:');
   }
 
-  getPopularMoviesById() {//get details
-    this.filmservice.getPopularMoviesById(this.activatedRoute.snapshot.params["id"]).
-    subscribe((result) => {
-      this.filmdetails = result;
-      this.genre = this.filmdetails.genres;
+  getPopularMoviesById() {
+    //get details
+    this.filmservice
+      .getPopularMoviesById(this.activatedRoute.snapshot.params['id'])
+      .subscribe((result) => {
+        this.filmdetails = result;
+        this.genre = this.filmdetails.genres;
+      });
+  }
+  getCommentaire() {
+    this.filmservice.getCommentaire().subscribe((result) => {
+      this.commentaire = result;
     });
   }
-  getCommentaire(){
-    this.filmservice.getCommentaire().subscribe((result)=>{
-      this.commentaire=result
-    })
-  }
-  getCommentaireFiltred(idFilm:number){
-    console.log("now poe ",this.filmId);
-    this.filmservice.getCommentaireFiltred(idFilm).subscribe((result)=>{
-      this.commentaireFiltred=result
-    })
+  getCommentaireFiltred(idFilm: number) {
+    console.log('now poe ', this.filmId);
+    this.filmservice.getCommentaireFiltred(idFilm).subscribe((result) => {
+      this.commentaireFiltred = result;
+    });
   }
   deleteComment(id: number) {
     this.filmservice.deleteComment(id).subscribe(
@@ -104,14 +106,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.getCommentaire();
     this.submit_commentaire();
     this.editor = new Editor();
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe((params) => {
       // Access the film.id parameter
       const id = params['id'];
-      this.filmId=id;
+      this.filmId = id;
 
       // Use the id as needed, for example, call your service method
       this.getCommentaireFiltred(id);
-
     });
   }
 
@@ -123,5 +124,4 @@ export class DetailsComponent implements OnInit, OnDestroy {
   sanitizeHTML(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
-
 }

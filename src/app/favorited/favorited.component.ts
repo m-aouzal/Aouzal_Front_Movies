@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FilmService } from '../../Service/film.service';
-import { FavoritedMovie } from '../../Model/FavoritedMovie';
+import { FilmService } from '../Service/film.service';
+import { FavoritedMovie } from '../Model/FavoritedMovie';
 import { CommonModule } from '@angular/common';
-import { Film } from '../../Model/film';
+import { Film } from '../Model/film';
 import { forkJoin } from 'rxjs';
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-import {RouterLink} from "@angular/router";
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-favorited',
@@ -24,14 +24,14 @@ export class FavoritedComponent implements OnInit {
   ngOnInit(): void {
     this.getAllFavoritesWithDetails();
   }
-  getUrl(name : any){
+  getUrl(name: any) {
     return this.filmservice.getimagefromapi(name);
   }
 
   getAllFavoritesWithDetails() {
     this.filmservice.getAllFavorites().subscribe((data) => {
       this.favoritedMovies = data;
-      console.log("data", data);
+      console.log('data', data);
 
       // Use forkJoin to parallelize requests
       const requests = this.favoritedMovies
@@ -42,7 +42,7 @@ export class FavoritedComponent implements OnInit {
 
       forkJoin(requests).subscribe((results) => {
         this.favoritedMovieDetailsList = results.filter((result) => !!result);
-        console.log("Favorited movie details:", results);
+        console.log('Favorited movie details:', results);
       });
     });
   }
