@@ -55,8 +55,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  navigateToSignupSeller() {
-    this.router.navigate(['/s']);
+  navigateToAboutPage() {
+    this.router.navigate(['/About']);
   }
   navigateToHomePage() {
     this.router.navigate(['/home']);

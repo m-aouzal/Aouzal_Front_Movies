@@ -42,9 +42,8 @@
             <button mat-button class="top-menu-item">Sign Up / Login</button>
           </span>
           <span>
-            <button mat-button class="top-menu-item">About Us</button>
+            <button mat-button class="top-menu-item" (click)="navigateToAboutPage()">About Us</button>
           </span>
-          
         </div>
       </mat-toolbar-row>
     </mat-toolbar>
@@ -72,15 +71,10 @@
             ><mat-icon>settings_applications</mat-icon>My Favorites</a
           >
           <a (click)="sidenav.close()" mat-button class="side-menu-item"
+          (click)="navigateToAboutPage()"
             ><mat-icon>info</mat-icon>About Us</a
           >
-          <a
-            (click)="sidenav.close()"
-            mat-button
-            class="side-menu-item"
-            (click)="navigateToSignupSeller()"
-            ><mat-icon>people</mat-icon>Become A Seller</a
-          >
+         
         </div>
       </div>
     </mat-sidenav>
