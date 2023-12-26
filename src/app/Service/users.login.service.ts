@@ -4,11 +4,11 @@ import {
   HttpHandler,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { User } from './user.model';
+import { User } from '../login/user.model';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { catchError, throwError, tap, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 export interface AuthResponseData {
   idToken: string;
   email: string;
