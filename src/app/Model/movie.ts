@@ -2,6 +2,6 @@ import { Comment } from './comment';
 
 export class Movie {
   id: number;
-  isFavorite?: boolean;
-  comments?: Comment[];
+  isFavorite: boolean = false;
+  comments: Comment[];
 }

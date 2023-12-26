@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, tap, switchMap } from 'rxjs/operators';
 import { Movie } from '../Model/movie';
-import { Comment } from '../Model/comment'; // Assuming 'comment.ts' is in the same directory as this service
+import { Comment } from '../Model/comment';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,8 @@ export class FilmService {
   private readonly baseurl = 'https://api.themoviedb.org/3/discover/movie';
   private readonly apikey = '4722616a8836f0b929a9cb3a04f6a6a4';
   private readonly dbPath = '/Movies';
+
+  commentsChanged: Subject<Comment[]> = new Subject<Comment[]>();
 
   constructor(private http: HttpClient) {}
 
@@ -25,39 +28,63 @@ export class FilmService {
       .get<Comment[]>(`${this.api}${this.dbPath}/${movieKey}/comments.json`)
       .pipe(
         map((response) => {
+          if (!response) {
+            return [];
+          }
+
           const comments: Comment[] = [];
           for (const key in response) {
             if (response.hasOwnProperty(key)) {
-              comments.push({ ...response[key] });
+              comments.push({ id: key, ...response[key] }); // Assign the ID
             }
-            console.log(comments);
           }
           return comments;
         }),
         tap((comments) => {
-          // Assuming you have a service or method to handle setting comments
-          // Replace 'this.recipesService.SetData(comments)' with your actual logic
-          // For example, you might have a method like 'this.commentService.setComments(comments)'
+          this.commentsChanged.next(comments); // Notify subscribers about comments changes
         })
       );
   }
 
   addComment(movieKey: number, comment: Comment): Observable<any> {
-    return this.http.post(
-      `${this.api}${this.dbPath}/${movieKey}/comments.json`,
-      comment
+    return this.getComments(movieKey).pipe(
+      switchMap((existingComments) => {
+        const updatedComments = [...existingComments, comment];
+        return this.putComments(movieKey, updatedComments);
+      })
     );
   }
 
-  updateComment(commentId: number, CommentData: any): Observable<any> {
+  private putComments(movieKey: number, comments: Comment[]): Observable<any> {
     return this.http.put(
-      `${this.api}/Commentaire/${commentId}.json`,
+      `${this.api}${this.dbPath}/${movieKey}/comments.json`,
+      comments
+    );
+  }
+
+  updateComment(
+    movieKey: number,
+    commentId: number,
+    CommentData: any
+  ): Observable<any> {
+    return this.http.put(
+      `${this.api}${this.dbPath}/${movieKey}/comments/${commentId}.json`,
       CommentData
     );
   }
 
-  deleteComment(commentId: number): Observable<any> {
-    return this.http.delete(`${this.api}/Commentaire/${commentId}.json`);
+  deleteComment(movieKey: number, commentId: number): Observable<any> {
+    console.log('Deleting comment with id:', movieKey);
+    return this.http
+      .delete<Comment>(
+        `${this.api}${this.dbPath}/${movieKey}/comments/${commentId}.json`
+      )
+      .pipe(
+        switchMap(() => this.getComments(movieKey)),
+        tap((comments) => {
+          this.commentsChanged.next(comments); // Notify about comments changes
+        })
+      );
   }
 
   getPopularMovies(): Observable<any> {

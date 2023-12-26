@@ -4,7 +4,6 @@ import { FilmService } from '../Service/film.service';
 import { Filmdetails } from '../Model/filmdetails';
 import { Genre } from '../Model/genre';
 import { Comment } from '../Model/comment';
-import { Commentaire } from '../Model/Commentaire';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { Editor, NgxEditorModule, Validators } from 'ngx-editor';
@@ -20,7 +19,6 @@ import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 export class DetailsComponent implements OnInit, OnDestroy {
   // Properties
   filmdetails!: Filmdetails;
-  comment: Comment;
   comments: Comment[];
   filmId!: number;
   genre!: Genre[];
@@ -50,8 +48,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
       const id = params['id'];
       this.filmId = id;
     });
-    this.filmservice.getComments(this.filmId).subscribe((result) => {
-      this.comments = result;
+    this.filmservice.commentsChanged.subscribe((comments) => {
+      if (comments !== null) {
+        this.comments = comments;
+      }
     });
   }
 
@@ -69,11 +69,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
       username: this.formData.nom,
       data: this.formData.comment,
     };
-    const idFilm = this.filmId;
 
-    this.filmservice.addComment(this.filmdetails.id, comment).subscribe(
+    this.filmservice.addComment(this.filmId, comment).subscribe(
       (response) => {
         console.log('Comment added successfully', response);
+        // Refresh comments after adding a new one
+        this.getComments();
       },
       (error) => {
         console.error('Error adding comment', error);
@@ -98,10 +99,21 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   deleteComment(id: number) {
-    this.filmservice.deleteComment(id);
+    this.filmservice.deleteComment(this.filmId, id).subscribe(
+      () => {
+        console.log('Comment deleted successfully');
+        // Refresh comments after deleting one
+        this.getComments();
+      },
+      (error) => {
+        console.error('Error deleting comment', error);
+      }
+    );
   }
+
   getComments() {
     this.filmservice.getComments(this.filmId).subscribe((result) => {
+      console.log(result);
       this.comments = result;
     });
   }
