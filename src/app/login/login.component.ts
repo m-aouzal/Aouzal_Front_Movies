@@ -82,7 +82,7 @@ export class LoginComponent implements ComponentsForm {
       next: (response) => {
         this.loadingLogin = false;
         this.loadingSignUp = false;
-        if (mode !== 'signUp') this.router.navigate(['/recipes']);
+        if (mode !== 'signUp') this.router.navigate(['/home']);
         console.log(response);
       },
       error: (err) => {

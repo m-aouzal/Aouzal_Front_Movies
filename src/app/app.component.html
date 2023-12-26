@@ -35,11 +35,19 @@
 
         <div fxLayout="row" fxLayoutGap="16px">
           <span>
-            <button mat-button class="top-menu-item" (click)="onOpenFavorites()">My favorites</button>
+            <button
+              mat-button
+              class="top-menu-item"
+              (click)="onOpenFavorites()"
+            >
+              My favorites
+            </button>
           </span>
 
-          <span>
-            <button mat-button class="top-menu-item">Sign Up / Login</button>
+          <span *ngIf="!isAuthenticated">
+            <button mat-button class="top-menu-item" (click)="onLogin()">
+              Sign Up / Login
+            </button>
           </span>
           <span>
             <button
@@ -48,6 +56,12 @@
               (click)="navigateToAboutPage()"
             >
               About Us
+            </button>
+          </span>
+          <!-- //*ngIf="isAuthenticated" -->
+          <span >
+            <button mat-button class="top-menu-item" (click)="onLogout()">
+              Logout
             </button>
           </span>
         </div>
@@ -73,9 +87,22 @@
             (click)="navigateToHomePage()"
             ><mat-icon>home</mat-icon>Home</a
           >
-          <a (click)="sidenav.close()" mat-button class="side-menu-item"
+          <a
+            (click)="sidenav.close()"
+            mat-button
+            class="side-menu-item"
+            (click)="onOpenFavorites()"
             ><mat-icon>settings_applications</mat-icon>My Favorites</a
           >
+          <a
+            (click)="sidenav.close()"
+            mat-button
+            class="side-menu-item"
+            (click)="onLogin()"
+            *ngIf="!isAuthenticated"
+          >
+            <mat-icon>group_add</mat-icon>Sign Up / Login
+          </a>
           <a
             (click)="sidenav.close()"
             mat-button
@@ -83,6 +110,15 @@
             (click)="navigateToAboutPage()"
             ><mat-icon>info</mat-icon>About Us</a
           >
+          <a
+            (click)="sidenav.close()"
+            mat-button
+            class="side-menu-item"
+            (click)="onLogout()"
+            *ngIf="isAuthenticated"
+          >
+            <mat-icon>lock_open</mat-icon>Logout
+          </a>
         </div>
       </div>
     </mat-sidenav>

@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FavoritedComponent } from './favorited/favorited.component';
+import { MyFavoritesComponent } from './MyFavorites/MyFavorites.component';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { blockLoginGuard } from './guards/block-login.guard';
@@ -12,9 +12,9 @@ const routeConfig: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {
-    path: 'favorited',
-    component: FavoritedComponent,
-    title: 'favorited page',
+    path: 'Myfavorites',
+    component: MyFavoritesComponent,
+    title: 'My favorites page',
     canActivate: [AuthGuard],
   },
   {

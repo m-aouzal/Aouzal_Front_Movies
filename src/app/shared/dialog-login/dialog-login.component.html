@@ -1,6 +1,17 @@
-<h2 mat-dialog-title><p>To access your favorites, please sign up or login.</p></h2>
+<h1 mat-dialog-title>Unlock Premium Features!</h1>
+<mat-dialog-content class="mat-typography">
+  <p>Discover a world of exclusive content and personalized experiences by signing up or logging in.</p>
 
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="primary">Continue</button>
+  <p>🌟 Enjoy premium features like saving your favorite items to access them anytime, anywhere!</p>
+
+  <p>🚀 Elevate your experience and tailor your preferences to make the most out of our platform.</p>
+
+  <p>Join our community today and unlock a new level of convenience and customization!</p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <!-- White button -->
+  <button mat-button mat-dialog-close class="mat-raised-button mat-button-lg" color="warn">Maybe Later</button>
+  <!-- Primary button -->
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="mat-raised-button mat-button-lg" color="primary">Join Now</button>
 </mat-dialog-actions>

@@ -52,6 +52,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.userSub = this.userLoginService.userSubject.subscribe((user) => {
+      console.log('user', user);
+      this.isAuthenticated = !!user;
+    });
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -60,9 +64,6 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((event: NavigationEnd) => {
         this.pageNotFound = event.urlAfterRedirects.includes('404');
       });
-    this.userSub = this.userLoginService.userSubject.subscribe((user) => {
-      this.isAuthenticated = !!user;
-    });
   }
 
   ngOnDestroy() {
@@ -83,14 +84,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
   onOpenFavorites() {
+    console.log('this.isAuthenticated', this.isAuthenticated);
     if (this.isAuthenticated) {
-      this.router.navigate(['/favorites']);
+      this.router.navigate(['/Myfavorites']);
     } else {
       {
         const dialogRef = this.dialog.open(DialogLoginComponent);
 
         dialogRef.afterClosed().subscribe((result) => {
-          console.log(`Dialog result: ${result}`);
+          if (result) {
+            this.router.navigate(['/login']);
+          }
         });
       }
     }
