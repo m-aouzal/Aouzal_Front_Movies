@@ -18,6 +18,8 @@ import { UsersloginService } from './Service/users.login.service';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DialogLoginComponent } from './shared/dialog-login/dialog-login.component';
+import { Film } from './Model/film';
+import { FilmService } from './Service/film.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -41,6 +43,8 @@ import { DialogLoginComponent } from './shared/dialog-login/dialog-login.compone
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, OnDestroy {
+  films!: Film[];
+  filmsfiltred!: Film[];
   pageNotFound: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
   isAuthenticated = false;
@@ -48,7 +52,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private userLoginService: UsersloginService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private filmService: FilmService
   ) {}
 
   ngOnInit() {
@@ -57,13 +62,17 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log('user', user);
       this.isAuthenticated = !!user;
     });
-    this.router.events  
+    this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         takeUntil(this.destroy$)
       )
       .subscribe((event: NavigationEnd) => {
         this.pageNotFound = event.urlAfterRedirects.includes('404');
+      });
+      this.filmService.getPopularMovies().subscribe((data) => {
+        const films = data.results;
+        this.filmService.setAllFilms(films);
       });
   }
 
@@ -72,6 +81,24 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
     this.userSub.unsubscribe();
   }
+  // Inside AppComponent class
+  filterResults(text: string) {
+    const allFilms = this.filmService.allFilmsSource.value;
+
+    if (!text) {
+      this.filmService.updateFilteredFilms(allFilms);
+      return;
+    }
+
+    const filteredFilms = allFilms.filter(
+      (film) =>
+        film?.title.toLowerCase().includes(text.toLowerCase()) ||
+        film?.overview.toLowerCase().includes(text.toLowerCase())
+    );
+
+    this.filmService.updateFilteredFilms(filteredFilms);
+  }
+
   navigateToAboutPage() {
     this.router.navigate(['/About']);
   }

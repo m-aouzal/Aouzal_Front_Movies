@@ -18,6 +18,8 @@ export class MyFavoritesComponent implements OnInit {
   favoriteMovies: Film[] = [];
   user: User;
   userId: number;
+  isFavorite: boolean = true;
+  film: Film;
 
   constructor(
     private filmService: FilmService,
@@ -43,6 +45,13 @@ export class MyFavoritesComponent implements OnInit {
       (error) => {
         console.error('Error fetching favorite movies:', error);
       }
+    );
+  }
+  onFavoriteRemoved(movieId: number) {
+    console.log('Removing favorite movie with ID:', movieId);
+    // You may want to update the local favoriteMovies array
+    this.favoriteMovies = this.favoriteMovies.filter(
+      (movie) => movie.id !== movieId
     );
   }
 }

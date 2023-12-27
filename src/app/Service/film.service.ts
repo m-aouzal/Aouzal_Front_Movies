@@ -10,7 +10,7 @@ import { User } from '../login/user.model';
 import { Favorite } from '../Model/Favorite';
 import { forkJoin } from 'rxjs';
 import { Film } from '../Model/film';
-
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,11 +22,26 @@ export class FilmService {
   favoritesChanged: Subject<Favorite[]> = new Subject<Favorite[]>();
   favoritesMoviesIds: Subject<number[]> = new Subject<number[]>();
   commentsChanged: Subject<Comment[]> = new Subject<Comment[]>();
+  allFilmsSource = new BehaviorSubject<Film[]>([]);
+  allFilms$ = this.allFilmsSource.asObservable();
+
+  filteredFilmsSource = new BehaviorSubject<Film[]>([]);
+  filteredFilms$ = this.filteredFilmsSource.asObservable();
+
   user: User;
   constructor(
     private http: HttpClient,
     private usersService: UsersloginService
   ) {}
+
+  setAllFilms(films: Film[]) {
+    this.allFilmsSource.next(films);
+    this.filteredFilmsSource.next(films);
+  }
+
+  updateFilteredFilms(films: Film[]) {
+    this.filteredFilmsSource.next(films);
+  }
 
   getAll(): Observable<Film[]> {
     return this.http.get<Film[]>(`${this.api}${this.dbPath}.json`);

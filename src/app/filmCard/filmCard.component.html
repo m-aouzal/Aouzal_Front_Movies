@@ -1,18 +1,38 @@
-<div class="card mb-4 shadow-sm">
-  <img class="card-img-top" src="{{ getUrl(film.poster_path) }}" alt="{{ film.title }}">
-  <div class="card-body" >
+<div class="card m-4 shadow-sm">
+  <img
+    class="card-img-top"
+    src="{{ getUrl(film.poster_path) }}"
+    alt="{{ film.title }}"
+  />
+  <div class="card-body">
     <div class="d-flex justify-content-between align-items-center">
       <h5 class="card-title">{{ film.title }}</h5>
-      <button mat-icon-button (click)="toggleFavorite()" [class.clicked]="true">
-        <mat-icon  class="text-danger">{{ isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+      <button
+        mat-icon-button
+        *ngIf="!isFavoritesPage"
+        (click)="toggleFavorite()"
+        [class.clicked]="isFavorite"
+      >
+        <mat-icon class="text-danger">{{
+          isFavorite ? "favorite" : "favorite_border"
+        }}</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        *ngIf="isFavoritesPage"
+        (click)="removeFromFavorites()"
+        [class.clicked]="isFavorite"
+      >
+        <mat-icon class="text-danger">delete</mat-icon>
       </button>
     </div>
 
-
     <p class="card-text">Release Date: {{ film.release_date }}</p>
     <p class="card-text d-inline me-5">Vote Average: {{ film.vote_average }}</p>
-    <a [routerLink]="['/details', film.id]"  class="btn detail btn-primary d-inline ms-2 mb-4">Details</a>
-
-
+    <a
+      [routerLink]="['/details', film.id]"
+      class="btn detail btn-primary d-inline ms-2 mb-4"
+      >Details</a
+    >
   </div>
 </div>

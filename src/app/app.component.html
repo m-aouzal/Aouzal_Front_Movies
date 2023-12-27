@@ -35,6 +35,18 @@
 
         <div fxLayout="row" fxLayoutGap="16px">
           <span>
+            <input
+              class="form-control me-4"
+              type="search"
+              placeholder="Search movie"
+              aria-label="Search"
+              #filter
+              (input)="filterResults(filter.value)"
+              style="border-width: 2px"
+            />
+          </span>
+
+          <span>
             <button
               mat-button
               class="top-menu-item"
@@ -58,7 +70,7 @@
               About Us
             </button>
           </span>
-          
+
           <span *ngIf="isAuthenticated">
             <button mat-button class="top-menu-item" (click)="onLogout()">
               Logout
@@ -124,7 +136,7 @@
       </div>
     </mat-sidenav>
     <mat-sidenav-content style="background-color: white !important">
-      <div [ngClass]="{ 'container-all': pageNotFound }">
+      <div class="mb-5" [ngClass]="{ 'container-all': pageNotFound }">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

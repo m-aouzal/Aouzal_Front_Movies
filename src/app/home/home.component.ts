@@ -5,9 +5,9 @@ import { FilmService } from '../Service/film.service';
 import { FilmCardComponent } from '../filmCard/filmCard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Filmdetails } from '../Model/filmdetails';
-import { forkJoin } from 'rxjs';
-
+import { Router, NavigationEnd } from '@angular/router';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,38 +19,18 @@ export class HomeComponent implements OnInit {
   films!: Film[];
   filmsfiltred!: Film[];
   all_ids!: number[];
-  id_gender: any[] = []; // Initialize id_gender as an empty array
-  filmdetails!: Filmdetails;
+  isFavoritesPage: boolean = false;
 
-  genres: string[] = [
-    'Action',
-    'Adventure',
-    'Animation',
-    'Comedy',
-    'Crime',
-    'Documentary',
-    'Drama',
-    'Family',
-    'Fantasy',
-    'History',
-    'Horror',
-    'Music',
-    'Mystery',
-    'Romance',
-    'Science Fiction',
-    'Thriller',
-    'TV Movie',
-    'War',
-    'Western',
-  ];
+  constructor(private filmservice: FilmService, private router: Router) {}
 
-  selectedGenre: string = ''; // Initialize with an empty string or a default genre if needed
-
-  constructor(private filmservice: FilmService) {}
   ngOnInit(): void {
-    this.getAllDatils();
+    this.getAllDetails();
+    this.filmservice.filteredFilms$.subscribe((filteredFilms) => {
+      this.filmsfiltred = filteredFilms;
+    });
   }
-  getAllDatils() {
+
+  getAllDetails() {
     // get all popular movie with all detail aller retour get
     this.filmservice.getPopularMovies().subscribe((data) => {
       this.films = data.results;
@@ -62,15 +42,6 @@ export class HomeComponent implements OnInit {
         const requests = this.all_ids.map((id) =>
           this.filmservice.getMovieById(id)
         );
-
-        forkJoin(requests).subscribe((results) => {
-          results.forEach((result, index) => {
-            this.id_gender.push({
-              idfilm: this.all_ids[index],
-              genres: result.genres,
-            });
-          });
-        });
       }
     });
   }
@@ -78,44 +49,10 @@ export class HomeComponent implements OnInit {
   getUrl(name: any) {
     return this.filmservice.getImageFromApi(name);
   }
-  filterResults(text: string) {
-    if (!text) {
-      this.filmsfiltred = this.films;
-      return;
-    }
-    this.filmsfiltred = this.films.filter((film) =>
-      film?.title.toLowerCase().includes(text.toLowerCase())
-    );
-  }
+
   isFavorite: boolean = false;
 
   toggleFavorite() {
     this.isFavorite = !this.isFavorite;
-  }
-
-  filterResultsGenre(genre: string) {
-    console.log(genre);
-    console.log('zlk', this.id_gender);
-
-    if (!genre) {
-      this.filmsfiltred = this.films; // If no genre is selected, display all films
-      return;
-    }
-
-    const matchingIds = this.id_gender
-      .filter((entry: any) =>
-        entry.genres.some(
-          (genreObj: any) => genreObj.name.toLowerCase() === genre.toLowerCase()
-        )
-      )
-      .map((entry: { idfilm: number }) => entry.idfilm);
-
-    console.log('matchingid', matchingIds);
-
-    this.filmsfiltred = this.films.filter((film) =>
-      matchingIds.includes(film.id)
-    );
-
-    console.log('Filtered films:', this.filmsfiltred);
   }
 }

@@ -1,5 +1,5 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
   <div class="col" *ngFor="let film of favoriteMovies">
-    <app-film-card [film]="film"></app-film-card>
+    <app-film-card [film]="film" [isFavoritesPage]="true" (favoriteRemoved)="onFavoriteRemoved($event)"></app-film-card>
   </div>
 </div>
