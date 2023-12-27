@@ -58,8 +58,8 @@
               About Us
             </button>
           </span>
-          <!-- //*ngIf="isAuthenticated" -->
-          <span >
+          
+          <span *ngIf="isAuthenticated">
             <button mat-button class="top-menu-item" (click)="onLogout()">
               Logout
             </button>
@@ -108,14 +108,15 @@
             mat-button
             class="side-menu-item"
             (click)="navigateToAboutPage()"
-            ><mat-icon>info</mat-icon>About Us</a
           >
+            <mat-icon>info</mat-icon>About Us
+          </a>
           <a
             (click)="sidenav.close()"
             mat-button
             class="side-menu-item"
             (click)="onLogout()"
-            *ngIf="isAuthenticated"
+            *ngIf="!!isAuthenticated"
           >
             <mat-icon>lock_open</mat-icon>Logout
           </a>
