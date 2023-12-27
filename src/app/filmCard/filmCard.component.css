@@ -4,13 +4,13 @@ body {
 
 /* Custom styles for the card */
 .card {
-  width: 18rem; /* Adjust the width as needed */
+  width: 100%; /* Adjust the width as needed */
   height: auto; /* Adjust the height as needed */
 }
 
-
 .card-img-top {
-  height: 300px; /* Adjust the image height as needed */
+  height: auto;
+  width: 100%; /* Adjust the image height as needed */
   object-fit: cover;
 }
 /* your-component.component.css */
@@ -18,7 +18,8 @@ body {
 .card {
   border: none; /* Remove card border for a cleaner look */
   transition: transform 0.3s ease; /* Add a smooth transition effect */
-
+  border-color: #0652dd !important;
+  border: solid;
   /* Customize card shadow if needed */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -27,10 +28,7 @@ body {
   transform: scale(1.02); /* Zoom in a bit on hover */
 }
 
-.card-img-top {
-  max-height: 300px; /* Set a maximum height for the image */
-  object-fit: cover; /* Maintain aspect ratio and cover the container */
-}
+
 
 .card-body {
   padding: 1.25rem; /* Add some padding to the card body */
