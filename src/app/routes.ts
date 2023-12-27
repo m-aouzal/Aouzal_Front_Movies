@@ -7,7 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { blockLoginGuard } from './guards/block-login.guard';
 import { AuthGuard } from './guards/auth-can-activate.guard';
-
+import { authDeActivateGuard } from './guards/auth-de-activate.guard';
 const routeConfig: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -21,6 +21,7 @@ const routeConfig: Routes = [
     path: 'details/:id',
     component: DetailsComponent,
     title: 'Home details',
+    canDeactivate: [authDeActivateGuard]
   },
   {
     path: 'About',

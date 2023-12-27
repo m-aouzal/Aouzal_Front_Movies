@@ -8,6 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { Editor, NgxEditorModule, Validators } from 'ngx-editor';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { ComponentsForm } from '../ComponentsForm';
 
 @Component({
   selector: 'app-details',
@@ -16,7 +17,7 @@ import { FormControl, FormGroup, FormsModule } from '@angular/forms';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css'],
 })
-export class DetailsComponent implements OnInit, OnDestroy {
+export class DetailsComponent implements OnInit, OnDestroy, ComponentsForm {
   // Properties
   filmdetails!: Filmdetails;
   comments: Comment[];
@@ -31,6 +32,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
   });
 
   formData: { nom: string; comment: string } = { nom: '', comment: '' };
+
+  verifyChangesAndConfirm(): boolean {
+    // Assuming your Editor class has valueChanges
+    return (
+      !this.editor ||
+      !this.editor.valueChanges ||
+      window.confirm('You have unsaved changes. Do you really want to leave?')
+    );
+  }
 
   // Constructor
   constructor(
