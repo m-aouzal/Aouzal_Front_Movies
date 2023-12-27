@@ -7,32 +7,37 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { UsersloginService } from '../Service/users.login.service';
 import { User } from '../login/user.model';
-import { from } from 'rxjs';
+import { HashService } from '../Service/hash.service';
+
 @Component({
-  selector: 'app-home-film',
+  selector: 'app-film-card',
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
-  providers: [FilmService],
-  templateUrl: './home-film.component.html',
-  styleUrl: './home-film.component.css',
+  templateUrl: './filmCard.component.html',
+  styleUrl: './filmCard.component.css',
 })
-export class HomeFilmComponent implements OnInit {
+export class FilmCardComponent implements OnInit {
   @Input() film!: Film;
   user: User;
+  userId: number;
   constructor(
     private filmService: FilmService,
-    private usersLoginService: UsersloginService
+    private usersService: UsersloginService,
+    private hash: HashService
   ) {}
-
   ngOnInit(): void {
-    this.usersLoginService.userSubject.subscribe((user) => {
+    this.usersService.userSubject.subscribe((user) => {
       this.user = user;
+      this.userId = this.hash.hashCode(this.user.email);
     });
   }
+
   getUrl(name: any) {
     return this.filmService.getImageFromApi(name);
   }
+
   isFavorite: boolean = false;
+
   toggleFavorite() {
     this.isFavorite = !this.isFavorite;
     let favoritedata = {
@@ -41,26 +46,26 @@ export class HomeFilmComponent implements OnInit {
     };
     if (this.isFavorite == true) {
       console.log('true');
-      this.filmService.addToFavorites(this.film.id, this.user.id).subscribe(
-        (response) => {
-          console.log('Comment added successfully', response);
-          console.log('data is', this.isFavorite, this.film.id);
-        },
-        (error) => {
-          console.error('Error adding favorites', error);
-        }
-      );
+      this.filmService
+        .addFavoriteMovie(this.userId, favoritedata.idfilm)
+        .subscribe(
+          (response) => {
+            console.log('favorite added successfully', response);
+            console.log('data is', this.isFavorite, this.film.id);
+          },
+          (error) => {
+            console.error('Error adding favorites', error);
+          }
+        );
     } else {
       console.log('false');
-      from(
-        this.filmService.removeFromFavorites(this.film.id, this.user.id)
-      ).subscribe(
+      this.filmService.removeFavoriteMovie(this.userId, this.film.id).subscribe(
         (response) => {
-          console.log('Comment deleted', response);
+          console.log('favorite deleted', response);
           console.log('data is', this.isFavorite, this.film.id);
         },
         (error) => {
-          console.error('Error deleting', error);
+          console.error('Error delleting', error);
         }
       );
     }

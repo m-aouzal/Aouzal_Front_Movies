@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { MyFavoritesComponent } from './MyFavorites/MyFavorites.component';
+import { MyFavoritesComponent } from './MyFavorites/myFavorites.component';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { blockLoginGuard } from './guards/block-login.guard';

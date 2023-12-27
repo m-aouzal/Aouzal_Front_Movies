@@ -23,9 +23,10 @@
 
   <div class="row">
     <!-- Use *ngFor to iterate over films -->
-    <app-home-film class="col-md-4" *ngFor="let film of filmsfiltred" [film]="film" >
+    <app-film-card
+     class="col-md-4" *ngFor="let film of filmsfiltred" [film]="film" >
 
-    </app-home-film>
+    </app-film-card>
 
   </div>
 </div>

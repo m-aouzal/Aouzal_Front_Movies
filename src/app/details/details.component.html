@@ -1,206 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Film Details</title>
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <style>
-      body {
-        background-color: #f8f9fa;
-        color: #495057;
-      }
 
-      .container {
-        margin-top: 20px;
-        background-color: #ffffff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Film Details</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #495057;
+    }
 
-      .lead {
-        font-size: 1.2rem;
-      }
+    .container {
+      margin-top: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
 
-      .badge-primary {
-        background-color: #007bff;
-      }
+    .lead {
+      font-size: 1.2rem;
+    }
 
-      .list-group-item {
-        border: 1px solid #dee2e6;
-        margin-top: 10px;
-      }
+    .badge-primary {
+      background-color: #007bff;
+    }
 
-      .list-group-item:hover {
-        background-color: #f8f9fa;
-      }
+    .list-group-item {
+      border: 1px solid #dee2e6;
+      margin-top: 10px;
+    }
 
-      .card {
-        border: 1px solid #dee2e6;
-        margin-bottom: 10px;
-      }
+    .list-group-item:hover {
+      background-color: #f8f9fa;
+    }
 
-      .card:hover {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
+    .card {
+      border: 1px solid #dee2e6;
+      margin-bottom: 10px;
+    }
 
-      .card-title {
-        font-size: 1.5rem;
-        color: #007bff;
-      }
+    .card:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-      .card-text {
-        color: #495057;
-      }
+    .card-title {
+      font-size: 1.5rem;
+      color: #007bff;
+    }
 
-      .btn-primary {
-        background-color: #007bff;
-      }
+    .card-text {
+      color: #495057;
+    }
 
-      .btn-primary:hover {
-        background-color: #0056b3;
-      }
+    .btn-primary {
+      background-color: #007bff;
+    }
 
-      .btn-danger {
-        background-color: #dc3545;
-      }
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
 
-      .btn-danger:hover {
-        background-color: #c82333;
-      }
-    </style>
-  </head>
+    .btn-danger {
+      background-color: #dc3545;
+    }
 
-  <body>
-    <div class="container">
-      <div
-        class="row"
-        [style.background-image]="
-          'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://image.tmdb.org/t/p/w1280/' +
-          filmdetails.backdrop_path +
-          ') center center / cover'
-        "
-      >
-        <div class="col-md-4">
-          <img
-            style="height: 100%; width: 100%"
-            src="https://image.tmdb.org/t/p/w1280/{{ filmdetails.poster_path }}"
-            alt="{{ filmdetails.title }}"
-            class="img-fluid"
-          />
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="row" [style.background-image]="'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://image.tmdb.org/t/p/w1280/' + filmdetails.backdrop_path + ') center center / cover'">
+    <div class="col-md-4" >
+      <img style="height: 100%; width: 100%;" src="https://image.tmdb.org/t/p/w1280/{{ filmdetails.poster_path }}"
+           alt="{{ filmdetails.title }}" class="img-fluid">
+    </div>
+    <div class="col-md-8">
+      <h2 class="mb-4">{{ filmdetails.title }}</h2>
+      <p class="lead"><strong>Release Date:</strong> {{ filmdetails.release_date }}</p>
+      <p><strong>Overview:</strong> {{ filmdetails.overview }}</p>
+      <p><strong>Runtime:</strong> {{ filmdetails.runtime }} minutes</p>
+      <p><strong>Popularity:</strong> {{ filmdetails.popularity }}</p>
+      <p><strong>Vote Average:</strong> {{ filmdetails.vote_average }}</p>
+      <p><strong>Budget:</strong> {{ filmdetails.budget }}$</p>
+      <div *ngFor="let gn of genre" class="d-inline-block mr-2">
+        <span class="badge badge-primary">{{ gn.name }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8">
+      <h1 class="mb-3">Comments</h1>
+      <!-- Add a form for submitting comments -->
+      <form (ngSubmit)="submitComment()">
+        <div class="mb-3">
+          <label for="nom" class="form-label">Nom</label>
+          <input type="text" class="form-control" id="nom" [(ngModel)]="formData.nom" name="nom" required>
         </div>
-        <div class="col-md-8">
-          <h2 class="mb-4">{{ filmdetails.title }}</h2>
-          <p class="lead">
-            <strong>Release Date:</strong> {{ filmdetails.release_date }}
-          </p>
-          <p><strong>Overview:</strong> {{ filmdetails.overview }}</p>
-          <p><strong>Runtime:</strong> {{ filmdetails.runtime }} minutes</p>
-          <p><strong>Popularity:</strong> {{ filmdetails.popularity }}</p>
-          <p><strong>Vote Average:</strong> {{ filmdetails.vote_average }}</p>
-          <p><strong>Budget:</strong> {{ filmdetails.budget }}$</p>
-          <div *ngFor="let gn of genre" class="d-inline-block mr-2">
-            <span class="badge badge-primary">{{ gn.name }}</span>
+        <div class="mb-3">
+          <label for="comment" class="form-label">Leave a Comment:</label>
+          <div class="NgxEditor__Wrapper" style="height: 200px" >
+            <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+            <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false" id="comment"
+                        [(ngModel)]="formData.comment" name="comment" [placeholder]="'Type here...'"></ngx-editor>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" >Submit Comment</button>
+      </form>
+
+      <div class="container mt-4 mb-4">
+        <div class="row">
+          <div class="">
+            <h1 class="mb-3">Comments</h1>
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let comment of comments;  let i = index">
+                <div class="card mb-2">
+                  <div class="card-body">
+                    <p class="card-text">
+                      <strong>Name:</strong> {{ comment.username }}
+                    </p>
+                    <div class="card-text" [innerHTML]="sanitizeHTML(comment.data)"></div>
+                    <!-- Add a button to delete the message -->
+                    <button type="button" class="btn btn-danger" (click)="deleteComment(i)">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="container mt-4">
-      <div class="row">
-        <div class="col-md-8">
-          <h1 class="mb-3">Comments</h1>
-          <!-- Add a form for submitting comments -->
-          <form (ngSubmit)="submitComment()">
-            <div class="mb-3">
-              <label for="nom" class="form-label">Nom</label>
-              <input
-                type="text"
-                class="form-control"
-                id="nom"
-                [(ngModel)]="formData.nom"
-                name="nom"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="comment" class="form-label">Leave a Comment:</label>
-              <div class="NgxEditor__Wrapper" style="height: 200px">
-                <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-                <ngx-editor
-                  [editor]="editor"
-                  [ngModel]="html"
-                  [disabled]="false"
-                  id="comment"
-                  [(ngModel)]="formData.comment"
-                  name="comment"
-                  [placeholder]="'Type here...'"
-                ></ngx-editor>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              Submit Comment
-            </button>
-          </form>
 
-          <div class="container mt-4 mb-4">
-            <div class="row">
-              <div class="">
-                <h1 class="mb-3">Comments</h1>
-                <ul class="list-group">
-                  <li
-                    class="list-group-item"
-                    *ngFor="let comment of comments; let i = index; "
-                  >
-                    <div class="card mb-2">
-                      <div class="card-body">
-                        <p class="card-text">
-                          <strong>Name:</strong> {{ comment.username }}
-                        </p>
-                        <div
-                          class="card-text"
-                          [innerHTML]="sanitizeHTML(comment.data)"
-                        ></div>
-                        <!-- Add a button to delete the message -->
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          (click)="deleteComment(i)"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- Bootstrap JS (optional) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-Uo6zC/DJaqUnIj/3+J46jsqHy2lOq1n1l4paViJ3jKDaQQlmh/j5K438+1Ushx1x"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
 
-    <!-- Bootstrap JS (optional) -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-Uo6zC/DJaqUnIj/3+J46jsqHy2lOq1n1l4paViJ3jKDaQQlmh/j5K438+1Ushx1x"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-  </body>
 </html>

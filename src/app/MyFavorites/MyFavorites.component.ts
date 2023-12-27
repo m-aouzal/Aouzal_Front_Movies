@@ -1,49 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { FilmService } from '../Service/film.service';
-import { FavoritedMovie } from '../Model/FavoritedMovie';
-import { CommonModule } from '@angular/common';
+import { User } from '../login/user.model';
+import { HashService } from '../Service/hash.service';
 import { Film } from '../Model/film';
-import { forkJoin } from 'rxjs';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { UsersloginService } from '../Service/users.login.service';
+import { FilmCardComponent } from '../filmCard/filmCard.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-MyFavorites',
+  selector: 'app-my-favorites',
+  templateUrl: './myFavorites.component.html',
+  styleUrls: ['./myFavorites.component.css'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, RouterLink],
-  templateUrl: './MyFavorites.component.html',
-  styleUrls: ['./MyFavorites.component.css'],
+  imports: [FilmCardComponent, CommonModule],
 })
 export class MyFavoritesComponent implements OnInit {
-  favoritedMovies!: FavoritedMovie[];
-  favoritedMovieDetailsList: Film[] = [];
+  favoriteMovies: Film[] = [];
+  user: User;
+  userId: number;
 
-  constructor(private filmservice: FilmService) {}
+  constructor(
+    private filmService: FilmService,
+    private usersService: UsersloginService,
+    private hash: HashService
+  ) {}
 
   ngOnInit(): void {
-    //   this.getAllFavoritesWithDetails();
+    this.usersService.userSubject.subscribe((user) => {
+      this.user = user;
+      this.userId = this.hash.hashCode(this.user.email);
+      this.loadFavoriteMovies();
+    });
   }
-  // getUrl(name: any) {
-  //   return this.filmservice.getimagefromapi(name);
-  // }
 
-  // getAllFavoritesWithDetails() {
-  //   this.filmservice.getAllFavorites().subscribe((data) => {
-  //     this.favoritedMovies = data;
-  //     console.log('data', data);
-
-  //     // Use forkJoin to parallelize requests
-  //     const requests = this.favoritedMovies
-  //       .filter((favoritedMovie) => favoritedMovie.idfilm) // Filter out items with missing or falsy idfilm
-  //       .map((favoritedMovie) =>
-  //         this.filmservice.getPopularMoviesById(favoritedMovie.idfilm)
-  //       );
-
-  //     forkJoin(requests).subscribe((results) => {
-  //       this.favoritedMovieDetailsList = results.filter((result) => !!result);
-  //       console.log('Favorited movie details:', results);
-  //     });
-  //   });
-  // }
+  loadFavoriteMovies() {
+    console.log('Fetching favorite movies...');
+    this.filmService.getFavoriteMovies(this.userId).subscribe(
+      (movies) => {
+        console.log('Favorite movies:', movies);
+        this.favoriteMovies = movies;
+      },
+      (error) => {
+        console.error('Error fetching favorite movies:', error);
+      }
+    );
+  }
 }

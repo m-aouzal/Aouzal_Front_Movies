@@ -1,22 +1,5 @@
-<div class="row mt-5 ">
-  <!-- <div class="col-md-4" *ngFor="let filmfav of favoritedMovieDetailsList">
-    <div class="card mb-4 shadow-sm">
-      <img class="card-img-top" src="{{ getUrl(filmfav.poster_path) }}" alt="{{ filmfav.title }}">
-      <div class="card-body" >
-        <div class="d-flex justify-content-between align-items-center">
-          <h5 class="card-title">{{ filmfav.title }}</h5>
-        </div>
-
-
-        <p class="card-text">Release Date: {{ filmfav.release_date }}</p>
-        <p class="card-text d-inline me-5">Vote Average: {{ filmfav.vote_average }}</p>
-        <a [routerLink]="['/details', filmfav.id]"  class="btn detail btn-primary d-inline ms-2 mb-4">Details</a>
-
-
-      </div>
-    </div> -->
-
-
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
+  <div class="col" *ngFor="let film of favoriteMovies">
+    <app-film-card [film]="film"></app-film-card>
   </div>
-
-hhhhhhhhhhhhhhhhhhhhhh
+</div>

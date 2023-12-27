@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log('user', user);
       this.isAuthenticated = !!user;
     });
-    this.router.events
+    this.router.events  
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         takeUntil(this.destroy$)
