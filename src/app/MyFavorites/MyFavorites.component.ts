@@ -9,8 +9,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-my-favorites',
-  templateUrl: './myFavorites.component.html',
-  styleUrls: ['./myFavorites.component.css'],
+  templateUrl: './MyFavorites.component.html',
+  styleUrls: ['./MyFavorites.component.css'],
   standalone: true,
   imports: [FilmCardComponent, CommonModule],
 })
